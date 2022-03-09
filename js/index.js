@@ -162,6 +162,7 @@ function displayData(data) {
       main.appendChild(divMain);
 
       const divLeft = document.createElement("section");
+      divLeft.classList = "section-left";
       divMain.appendChild(divLeft);
       
         const img = document.createElement("img");
@@ -176,19 +177,22 @@ function displayData(data) {
           divTop.classList = "text-top"
           divText.appendChild(divTop);
 
-            const companyName = document.createElement("div");
+            const companyName = document.createElement("span");
             companyName.innerText = job.company;
+            companyName.classList = "company-name"
             divTop.appendChild(companyName);
 
             if (job.new) {
-              const jobNew = document.createElement("div") 
+              const jobNew = document.createElement("span") 
               jobNew.innerText = "NEW!";
+              jobNew.classList = "new"
               divTop.appendChild(jobNew);
             }
 
             if (job.featured) {
-              const jobFeatured = document.createElement("div") 
+              const jobFeatured = document.createElement("span") 
               jobFeatured.innerText = "FEATURED";
+              jobFeatured.classList = "featured"
               divTop.appendChild(jobFeatured);
             }
 
@@ -196,7 +200,7 @@ function displayData(data) {
           divMiddle.classList = "text-middle"
           divText.appendChild(divMiddle);
 
-            const jobPosition = document.createElement("div");
+            const jobPosition = document.createElement("span");
             jobPosition.innerText = job.position;
             divMiddle.appendChild(jobPosition);
 
@@ -204,37 +208,40 @@ function displayData(data) {
           divBot.classList = "text-bot"
           divText.appendChild(divBot);
 
-            const jobPostedAt = document.createElement("div");
+            const jobPostedAt = document.createElement("span");
             jobPostedAt.innerText = job.postedAt;
             divBot.appendChild(jobPostedAt);
             
-            const jobContract= document.createElement("div");
+            const jobContract= document.createElement("span");
             jobContract.innerText = job.contract;
+            jobContract.classList = "span-bullet-point";
             divBot.appendChild(jobContract);
             
-            const jobLocation = document.createElement("div");
+            const jobLocation = document.createElement("span");
             jobLocation.innerText = job.location;
+            jobLocation.classList = "span-bullet-point";
             divBot.appendChild(jobLocation);
           
       const divRight = document.createElement("section");
+      divRight.classList = "section-right";
       divMain.appendChild(divRight);         
-        
-        const jobRole = document.createElement("div");
+        //add event listenrr for filter
+        const jobRole = document.createElement("span");
         jobRole.innerText = job.role;
         divRight.appendChild(jobRole);
 
-        const jobLevel = document.createElement("div");
+        const jobLevel = document.createElement("span");
         jobLevel.innerText = job.level;
         divRight.appendChild(jobLevel);
 
         job.tools.forEach(tool => {
-          const jobTool = document.createElement("div");
+          const jobTool = document.createElement("span");
           jobTool.innerText = tool;
           divRight.appendChild(jobTool);
         })
 
         job.languages.forEach(language => {
-          const jobLanguage = document.createElement("div");
+          const jobLanguage = document.createElement("span");
           jobLanguage.innerText = language;
           divRight.appendChild(jobLanguage);
         })

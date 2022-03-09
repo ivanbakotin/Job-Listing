@@ -3,17 +3,22 @@
   margin: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Spartan', sans-serif;
   font-size: 62.5%;
 }
 
 body {
-  background-color: azure;
+  background-color: #effafa;
 }
 
 header {
-  height: 10vh;
-  background-color: aqua;
+  width: 100%;
+  background-color: #5ba4a4;
+  margin-bottom: 5rem;
+}
+
+header svg {
+  width: 100%;
 }
 
 main {
@@ -38,16 +43,34 @@ main article {
       -ms-flex-pack: justify;
           justify-content: space-between;
   background-color: white;
+  padding: 4rem;
   width: 80%;
+  -webkit-box-shadow: 0px 2px 10px #7b8e8e;
+          box-shadow: 0px 2px 10px #7b8e8e;
+  border-left: 0.5rem solid transparent;
 }
 
-main article section {
+main article:hover {
+  border-left: 0.5rem solid #5ba4a4;
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+
+main article .section-left {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  gap: 2rem;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 
-main article section .text {
+main article .section-left img {
+  height: 100%;
+}
+
+main article .section-left .text {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -58,17 +81,91 @@ main article section .text {
   -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
+  gap: 1.5rem;
 }
 
-main article section .text .text-top {
+main article .section-left .text .text-top {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 1rem;
 }
 
-main article section .text .text-bot {
+main article .section-left .text .text-top span {
+  font-size: clamp(1rem, 0.7vw, 2rem);
+}
+
+main article .section-left .text .text-top .company-name {
+  font-weight: 700;
+  color: #5ba4a4;
+}
+
+main article .section-left .text .text-top .new {
+  color: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: #5ba4a4;
+}
+
+main article .section-left .text .text-top .featured {
+  padding: 1rem;
+  color: white;
+  border-radius: 1rem;
+  background-color: black;
+}
+
+main article .section-left .text .text-middle span {
+  font-weight: 700;
+  font-size: clamp(1rem, 2vw, 3rem);
+  cursor: pointer;
+}
+
+main article .section-left .text .text-middle span:hover {
+  color: #5ba4a4;
+}
+
+main article .section-left .text .text-bot {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  gap: 2rem;
+}
+
+main article .section-left .text .text-bot span {
+  color: #7b8e8e;
+  font-size: clamp(1rem, 0.9vw, 2rem);
+}
+
+main article .section-left .text .text-bot .span-bullet-point {
+  display: list-item;
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
+main article .section-right {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 2rem;
+}
+
+main article .section-right span {
+  background-color: #eef6f6;
+  padding: 1rem;
+  color: #5ba4a4;
+  font-size: clamp(1rem, 1vw, 2rem);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+main article .section-right span:hover {
+  color: white;
+  background-color: #5ba4a4;
 }
 /*# sourceMappingURL=index.css.map */
