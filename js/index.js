@@ -151,20 +151,67 @@ allData = [
   }
 ]
 
-const filteredData = [...allData];
-const filters = [];
+let filteredData = [...allData];
+let filters = [];
 
 const body = document.querySelector("body");
+const filterSection = document.querySelector(".filters-section");
+const subFilterSection = document.querySelector(".filters");
 
-function filterFromJson(filter) {
-  if (!filters.includes(job[filter])) {
-    filters.push(job[filter]);
-    displayData(filteredData.filter(fake => fake[filter] != job[filter]));
+function filterFromJson(filter, filterName) {
+  if (!filters.includes(filter)) {
+    filters.push(filter);
+
+    filterSection.style.display = "flex";
+
+    const filterDiv = document.createElement("div");
+    filterDiv.classList = "filter"
+    filterDiv.setAttribute("data-name", filter)
+    subFilterSection.appendChild(filterDiv);
+
+      const filter_name = document.createElement("div");
+      filter_name.innerText = filter;
+      filter_name.classList = "filter-name"
+      filterDiv.appendChild(filter_name);
+
+      const filterClose = document.createElement("div");
+      filterClose.innerHTML = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\"><path fill\FFF\" fill-rule=\"evenodd\" d=\"M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z\"/></svg>"
+      filterClose.classList = "filter-close"
+      filterClose.addEventListener("click", () => unFilterFromJson(filter, filterName))
+      filterDiv.appendChild(filterClose);
+
+    if (Array.isArray(filteredData[0][filterName])) {
+      filteredData = filteredData.filter(fake => !fake[filterName].includes(filter))
+    } else {
+      filteredData = filteredData.filter(fake => fake[filterName] != filter)
+    }
+
+    displayData(filteredData);
   }
 }
 
-function unFilterFromJson(filter) {
-  
+function unFilterFromJson(filter, filterName) {
+  const search = "[data-name=" + "\'" + filter + "\']" 
+  document.querySelector(search).remove();
+  if (!document.querySelectorAll(".filter").length) {
+    filterSection.style.display = "none";
+  }
+
+  let newFilter = [];
+
+  if (Array.isArray(allData[0][filterName])) {
+    newFilter = allData.filter(fake => fake[filterName].includes(filter))
+  } else {
+    newFilter = allData.filter(fake => fake[filterName] === filter)
+  }
+
+  filters = filters.filter(fil => fil !== filter)
+
+  filteredData = [ ...filteredData, ...newFilter ]
+
+  filteredData = filteredData.sort((a, b) => a.id - b.id);
+  //remove duplicates
+  displayData(filteredData)
 }
 
 displayData(allData);
@@ -252,25 +299,25 @@ function displayData(data) {
 
         const jobRole = document.createElement("span");
         jobRole.innerText = job.role;
-        jobRole.addEventListener("click", () => filterFromJson(job.role))
+        jobRole.addEventListener("click", () => filterFromJson(job.role, "role"))
         divRight.appendChild(jobRole);
 
         const jobLevel = document.createElement("span");
         jobLevel.innerText = job.level;
-        jobRole.addEventListener("click", () => filterFromJson(job.level))
+        jobLevel.addEventListener("click", () => filterFromJson(job.level, "level"))
         divRight.appendChild(jobLevel);
 
         job.tools.forEach(tool => {
           const jobTool = document.createElement("span");
           jobTool.innerText = tool;
-          jobRole.addEventListener("click", () => filterFromJson(tool))
+          jobTool.addEventListener("click", () => filterFromJson(tool, "tools"))
           divRight.appendChild(jobTool);
         })
 
         job.languages.forEach(language => {
           const jobLanguage = document.createElement("span");
           jobLanguage.innerText = language;
-          jobRole.addEventListener("click", () => filterFromJson(language))
+          jobLanguage.addEventListener("click", () => filterFromJson(language, "languages"))
           divRight.appendChild(jobLanguage);
         })
     }) 

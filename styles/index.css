@@ -21,6 +21,57 @@ header svg {
   width: 100%;
 }
 
+.filters-section {
+  -webkit-transform: translateY(-7rem);
+          transform: translateY(-7rem);
+  margin: 0 auto;
+  margin-bottom: 4rem;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 4rem;
+  background-color: white;
+  width: 80%;
+}
+
+.filters-section .filters {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 3rem;
+}
+
+.filters-section .filters .filter {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.filters-section .filters .filter .filter-name {
+  font-size: clamp(2rem, 1vw, 3rem);
+}
+
+.filters-section .filters .filter .filter-close svg {
+  font-size: clamp(2rem, 1vw, 3rem);
+}
+
+.filters-section .clear {
+  font-size: clamp(1rem, 0.7vw, 2rem);
+  cursor: pointer;
+}
+
+.filters-section .clear:hover {
+  text-decoration: underline;
+}
+
 main {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -32,7 +83,7 @@ main {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  gap: 3rem;
+  gap: 4rem;
 }
 
 main article {
@@ -52,6 +103,10 @@ main article {
           box-shadow: 0px 2px 10px #7b8e8e;
   border-left: 0.5rem solid transparent;
   position: relative;
+}
+
+main article:last-of-type {
+  margin-bottom: 4rem;
 }
 
 main article:hover {
