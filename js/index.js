@@ -1,4 +1,4 @@
-data = [
+allData = [
   {
     "id": 1,
     "company": "Photosnap",
@@ -151,10 +151,34 @@ data = [
   }
 ]
 
-displayData(data)
+const filteredData = [...allData];
+const filters = [];
+
+const body = document.querySelector("body");
+
+function filterFromJson(filter) {
+  if (!filters.includes(job[filter])) {
+    filters.push(job[filter]);
+    displayData(filteredData.filter(fake => fake[filter] != job[filter]));
+  }
+}
+
+function unFilterFromJson(filter) {
+  
+}
+
+displayData(allData);
 
 function displayData(data) {
-    const main = document.getElementsByTagName("main")[0];
+
+    const mainDelete = document.querySelector("main");
+
+    if (mainDelete) {
+      mainDelete.remove();
+    }
+
+    const main = document.createElement("main");
+    body.appendChild(main);
 
     data.forEach(job => {
       
@@ -225,24 +249,28 @@ function displayData(data) {
       const divRight = document.createElement("section");
       divRight.classList = "section-right";
       divMain.appendChild(divRight);         
-        //add event listenrr for filter
+
         const jobRole = document.createElement("span");
         jobRole.innerText = job.role;
+        jobRole.addEventListener("click", () => filterFromJson(job.role))
         divRight.appendChild(jobRole);
 
         const jobLevel = document.createElement("span");
         jobLevel.innerText = job.level;
+        jobRole.addEventListener("click", () => filterFromJson(job.level))
         divRight.appendChild(jobLevel);
 
         job.tools.forEach(tool => {
           const jobTool = document.createElement("span");
           jobTool.innerText = tool;
+          jobRole.addEventListener("click", () => filterFromJson(tool))
           divRight.appendChild(jobTool);
         })
 
         job.languages.forEach(language => {
           const jobLanguage = document.createElement("span");
           jobLanguage.innerText = language;
+          jobRole.addEventListener("click", () => filterFromJson(language))
           divRight.appendChild(jobLanguage);
         })
     }) 
