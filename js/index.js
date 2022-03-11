@@ -152,69 +152,89 @@ allData = [
 ]
 
 let filteredData = [...allData];
-let filters = [];
+let currentFilters = [];
 
 const body = document.querySelector("body");
 const filterSection = document.querySelector(".filters-section");
 const subFilterSection = document.querySelector(".filters");
 
-function filterFromJson(filter, filterName) {
-  if (!filters.includes(filter)) {
-    filters.push(filter);
+displayData(allData);
 
-    filterSection.style.display = "flex";
+function filterIncludes(filterValue) {
+  currentFilters.forEach(filter => {
+    if (filter.filterValue == filterValue) {
+      return true;
+    }
+  })
+
+  return false;
+}
+
+function createFilterSection(filterValue, filterKey) {
+  filterSection.style.display = "flex";
 
     const filterDiv = document.createElement("div");
     filterDiv.classList = "filter"
-    filterDiv.setAttribute("data-name", filter)
+    filterDiv.setAttribute("data-name", filterValue)
     subFilterSection.appendChild(filterDiv);
 
       const filter_name = document.createElement("div");
-      filter_name.innerText = filter;
+      filter_name.innerText = filterValue;
       filter_name.classList = "filter-name"
       filterDiv.appendChild(filter_name);
 
       const filterClose = document.createElement("div");
       filterClose.innerHTML = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\"><path fill\FFF\" fill-rule=\"evenodd\" d=\"M11.314 0l2.121 2.121-4.596 4.596 4.596 4.597-2.121 2.121-4.597-4.596-4.596 4.596L0 11.314l4.596-4.597L0 2.121 2.121 0l4.596 4.596L11.314 0z\"/></svg>"
       filterClose.classList = "filter-close"
-      filterClose.addEventListener("click", () => unFilterFromJson(filter, filterName))
+      filterClose.addEventListener("click", () => unFilterFromJson(filterValue, filterKey))
       filterDiv.appendChild(filterClose);
+}
 
-    if (Array.isArray(filteredData[0][filterName])) {
-      filteredData = filteredData.filter(fake => !fake[filterName].includes(filter))
-    } else {
-      filteredData = filteredData.filter(fake => fake[filterName] != filter)
-    }
+function filterFromJson(filterValue, filterKey) {
 
+  if (!filterIncludes(filterValue)) {
+
+    currentFilters.push({ filterValue, filterKey });
+
+    createFilterSection(filterValue, filterKey);
+
+    filteredData = filteredData.filter(fake => fake[filterKey].includes(filterValue))
+ 
     displayData(filteredData);
   }
 }
 
-function unFilterFromJson(filter, filterName) {
-  const search = "[data-name=" + "\'" + filter + "\']" 
+function removeFilterSection(filterValue) {
+  const search = "[data-name=" + "\'" + filterValue + "\']" 
   document.querySelector(search).remove();
+
   if (!document.querySelectorAll(".filter").length) {
     filterSection.style.display = "none";
   }
-
-  let newFilter = [];
-
-  if (Array.isArray(allData[0][filterName])) {
-    newFilter = allData.filter(fake => fake[filterName].includes(filter))
-  } else {
-    newFilter = allData.filter(fake => fake[filterName] === filter)
-  }
-
-  filters = filters.filter(fil => fil !== filter)
-
-  filteredData = [ ...filteredData, ...newFilter ]
-
-  filteredData = filteredData.sort((a, b) => a.id - b.id);
-  //remove duplicates
-  displayData(filteredData)
 }
 
-displayData(allData);
+function rebalanceFilteredData() {
+  currentFilters.forEach(filter => {
+    filteredData = filteredData.filter(filterData => {
+      return filterData[filter.filterKey].includes(filter.filterValue);
+    })
+  })
+}
+
+function unFilterFromJson(filterValue, filterKey) {
+
+  currentFilters = currentFilters.filter(filter => filter.filterValue !== filterValue)
+
+  removeFilterSection(filterValue)
+  
+  filteredData = [ ...allData ]
+  
+  rebalanceFilteredData()
+
+  filteredData = filteredData.sort((a, b) => a.id - b.id);
+
+  displayData(filteredData)
+}
 
 function displayData(data) {
 
