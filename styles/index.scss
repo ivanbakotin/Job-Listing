@@ -40,20 +40,28 @@ header {
       align-items: center;
 
       .filter-name {
-        font-size: clamp(2rem, 1vw, 3rem);
+        background-color: hsl(180, 31%, 95%);
+        padding: 0.7rem;
+        color: hsl(180, 29%, 50%);;
+        font-size: clamp(1rem, 0.9vw, 2rem);
+        font-weight: 700;
       }
 
       .filter-close {
-        svg {
-          font-size: clamp(2rem, 1vw, 3rem);
+        padding: 0.7rem;
+        background-color: hsl(180, 29%, 50%);
+        cursor: pointer;
+        fill: white;
+      
+        &:hover {
+          background-color: black;
         }
-
       }
     }
   }
 
   .clear {
-    font-size: clamp(1rem, 0.7vw, 2rem);  
+    font-size: clamp(1rem, 1vw, 3rem);  
     cursor: pointer;
 
     &:hover {

@@ -56,15 +56,26 @@ header svg {
 }
 
 .filters-section .filters .filter .filter-name {
-  font-size: clamp(2rem, 1vw, 3rem);
+  background-color: #eef6f6;
+  padding: 0.7rem;
+  color: #5ba4a4;
+  font-size: clamp(1rem, 0.9vw, 2rem);
+  font-weight: 700;
 }
 
-.filters-section .filters .filter .filter-close svg {
-  font-size: clamp(2rem, 1vw, 3rem);
+.filters-section .filters .filter .filter-close {
+  padding: 0.7rem;
+  background-color: #5ba4a4;
+  cursor: pointer;
+  fill: white;
+}
+
+.filters-section .filters .filter .filter-close:hover {
+  background-color: black;
 }
 
 .filters-section .clear {
-  font-size: clamp(1rem, 0.7vw, 2rem);
+  font-size: clamp(1rem, 1vw, 3rem);
   cursor: pointer;
 }
 
