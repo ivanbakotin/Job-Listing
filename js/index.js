@@ -57,18 +57,6 @@ function createFilterSection(filterValue) {
   filterDiv.appendChild(filterClose);
 }
 
-function filterFromJson(filterValue, filterKey) {
-  if (!filterIncludes(filterValue)) {
-    console.log(filterIncludes(filterValue));
-    currentFilters.push({ filterValue, filterKey });
-    createFilterSection(filterValue);
-    filteredData = filteredData.filter((fake) =>
-      fake[filterKey].includes(filterValue)
-    );
-    displayData(filteredData);
-  }
-}
-
 function removeFilterSection(filterValue) {
   const search = "[data-name=" + "'" + filterValue + "']";
   document.querySelector(search).remove();
@@ -92,6 +80,17 @@ function rebalanceFilteredData(filterValue) {
   });
 
   filteredData = filteredData.sort((a, b) => a.id - b.id);
+}
+
+function filterFromJson(filterValue, filterKey) {
+  if (!filterIncludes(filterValue)) {
+    currentFilters.push({ filterValue, filterKey });
+    createFilterSection(filterValue);
+    filteredData = filteredData.filter((fake) =>
+      fake[filterKey].includes(filterValue)
+    );
+    displayData(filteredData);
+  }
 }
 
 function unFilterFromJson(filterValue) {
