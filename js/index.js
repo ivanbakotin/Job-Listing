@@ -1,20 +1,17 @@
 import { allData } from "./constants.js";
+import { filterIncludes } from "./utils.js";
 
 let filteredData = [...allData];
 let currentFilters = [];
 
-const body = document.querySelector("body");
+const main = document.querySelector("main");
+const jobTemplate = document.querySelector("#job-template");
 const filterSection = document.querySelector(".filters-section");
 const subFilterSection = document.querySelector(".filters");
 const clearFilters = document.querySelector(".clear");
 
 clearFilters.addEventListener("click", () => {
-  let child = subFilterSection.firstElementChild;
-
-  while (child) {
-    subFilterSection.removeChild(child);
-    child = subFilterSection.firstElementChild;
-  }
+  subFilterSection.innerText = "";
 
   filterSection.style.display = "none";
 
@@ -25,16 +22,6 @@ clearFilters.addEventListener("click", () => {
 });
 
 displayData(allData);
-
-function filterIncludes(filterValue) {
-  for (let i = 0; i < currentFilters.length; i++) {
-    if (currentFilters[i].filterValue == filterValue) {
-      return true;
-    }
-  }
-
-  return false;
-}
 
 function createFilterSection(filterValue) {
   filterSection.style.display = "flex";
@@ -83,7 +70,7 @@ function rebalanceFilteredData(filterValue) {
 }
 
 function filterFromJson(filterValue, filterKey) {
-  if (!filterIncludes(filterValue)) {
+  if (!filterIncludes(currentFilters, filterValue)) {
     currentFilters.push({ filterValue, filterKey });
     createFilterSection(filterValue);
     filteredData = filteredData.filter((fake) =>
@@ -100,110 +87,51 @@ function unFilterFromJson(filterValue) {
 }
 
 function displayData(data) {
-  const mainDelete = document.querySelector("main");
-
-  if (mainDelete) {
-    mainDelete.remove();
-  }
-
-  const main = document.createElement("main");
-  body.appendChild(main);
+  main.innerText = "";
 
   data.forEach((job) => {
-    const divMain = document.createElement("article");
-    main.appendChild(divMain);
+    const clone = jobTemplate.content.cloneNode(true);
 
-    const divLeft = document.createElement("section");
-    divLeft.classList = "section-left";
-    divMain.appendChild(divLeft);
+    const spans = clone.querySelectorAll("span");
+    const lis = clone.querySelectorAll("li");
+    const ul = clone.querySelector("ul");
+    const img = clone.querySelector("img");
 
-    const img = document.createElement("img");
     img.src = job.logo;
-    divLeft.appendChild(img);
 
-    const divText = document.createElement("div");
-    divText.classList = "text";
-    divLeft.appendChild(divText);
-
-    const divTop = document.createElement("div");
-    divTop.classList = "text-top";
-    divText.appendChild(divTop);
-
-    const companyName = document.createElement("span");
-    companyName.innerText = job.company;
-    companyName.classList = "company-name";
-    divTop.appendChild(companyName);
-
+    spans[0].textContent = job.company;
     if (job.new) {
-      const jobNew = document.createElement("span");
-      jobNew.innerText = "NEW!";
-      jobNew.classList = "new";
-      divTop.appendChild(jobNew);
+      spans[1].textContent = "NEW!";
     }
-
     if (job.featured) {
-      const jobFeatured = document.createElement("span");
-      jobFeatured.innerText = "FEATURED";
-      jobFeatured.classList = "featured";
-      divTop.appendChild(jobFeatured);
+      spans[2].textContent = "FEATURED!";
     }
+    spans[3].textContent = job.position;
+    spans[4].textContent = job.postedAt;
+    spans[5].textContent = job.contract;
+    spans[6].textContent = job.location;
 
-    const divMiddle = document.createElement("div");
-    divMiddle.classList = "text-middle";
-    divText.appendChild(divMiddle);
-
-    const jobPosition = document.createElement("span");
-    jobPosition.innerText = job.position;
-    divMiddle.appendChild(jobPosition);
-
-    const divBot = document.createElement("div");
-    divBot.classList = "text-bot";
-    divText.appendChild(divBot);
-
-    const jobPostedAt = document.createElement("span");
-    jobPostedAt.innerText = job.postedAt;
-    divBot.appendChild(jobPostedAt);
-
-    const jobContract = document.createElement("span");
-    jobContract.innerText = job.contract;
-    jobContract.classList = "span-bullet-point";
-    divBot.appendChild(jobContract);
-
-    const jobLocation = document.createElement("span");
-    jobLocation.innerText = job.location;
-    jobLocation.classList = "span-bullet-point";
-    divBot.appendChild(jobLocation);
-
-    const divRight = document.createElement("section");
-    divRight.classList = "section-right";
-    divMain.appendChild(divRight);
-
-    const jobRole = document.createElement("span");
-    jobRole.innerText = job.role;
-    jobRole.addEventListener("click", () => filterFromJson(job.role, "role"));
-    divRight.appendChild(jobRole);
-
-    const jobLevel = document.createElement("span");
-    jobLevel.innerText = job.level;
-    jobLevel.addEventListener("click", () =>
-      filterFromJson(job.level, "level")
-    );
-    divRight.appendChild(jobLevel);
+    lis[0].textContent = job.role;
+    lis[0].addEventListener("click", () => filterFromJson(job.role, "role"));
+    lis[1].textContent = job.level;
+    lis[1].addEventListener("click", () => filterFromJson(job.level, "level"));
 
     job.tools.forEach((tool) => {
-      const jobTool = document.createElement("span");
-      jobTool.innerText = tool;
+      const jobTool = document.createElement("li");
+      jobTool.textContent = tool;
       jobTool.addEventListener("click", () => filterFromJson(tool, "tools"));
-      divRight.appendChild(jobTool);
+      ul.appendChild(jobTool);
     });
 
     job.languages.forEach((language) => {
-      const jobLanguage = document.createElement("span");
-      jobLanguage.innerText = language;
+      const jobLanguage = document.createElement("li");
+      jobLanguage.textContent = language;
       jobLanguage.addEventListener("click", () =>
         filterFromJson(language, "languages")
       );
-      divRight.appendChild(jobLanguage);
+      ul.appendChild(jobLanguage);
     });
+
+    main.appendChild(clone);
   });
 }
