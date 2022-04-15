@@ -204,11 +204,11 @@ main {
           font-size: clamp(1rem, 1vw, 2rem);
           font-weight: 700;
           cursor: pointer;
-        }
 
-        &:hover {
-          color: white;
-          background-color: hsl(180, 29%, 50%);
+          &:hover {
+            color: white;
+            background-color: hsl(180, 29%, 50%);
+          }
         }
       }
     }

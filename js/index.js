@@ -100,16 +100,25 @@ function displayData(data) {
     img.src = job.logo;
 
     spans[0].textContent = job.company;
+
     if (job.new) {
-      spans[1].textContent = "NEW!";
+      const newDiv = document.createElement("SPAN");
+      newDiv.classList.add("new");
+      clone.querySelector(".section__left__text__top").appendChild(newDiv);
+      newDiv.textContent = "NEW!";
     }
+
     if (job.featured) {
-      spans[2].textContent = "FEATURED!";
+      const newDiv = document.createElement("SPAN");
+      newDiv.classList.add("featured");
+      clone.querySelector(".section__left__text__top").appendChild(newDiv);
+      newDiv.textContent = "FEATURED!";
     }
-    spans[3].textContent = job.position;
-    spans[4].textContent = job.postedAt;
-    spans[5].textContent = job.contract;
-    spans[6].textContent = job.location;
+
+    spans[1].textContent = job.position;
+    spans[2].textContent = job.postedAt;
+    spans[3].textContent = job.contract;
+    spans[4].textContent = job.location;
 
     lis[0].textContent = job.role;
     lis[0].addEventListener("click", () => filterFromJson(job.role, "role"));
